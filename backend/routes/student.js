@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getStudents, addNewStudent } = require('../controller/studentController')
+const { getStudents, addNewStudent, deleteStudent, removeStudent, studentStatus } = require('../controller/studentController')
 
 
 
@@ -15,10 +15,19 @@ router.get('/', getStudents)
 router.post('/add', addNewStudent)
 
 
-//delete student data
+//remove student data(soft delete-delete only from client)
+router.patch("delete/:id", deleteStudent)
 
+
+//remove student data(hard delete-delete from db)
+router.delete("remove/:id", removeStudent)
+
+
+//remove student from vle blocking
+router.patch("updatestatus/:id", studentStatus)
 
 //update student data
+
 
 
 //export rounter
