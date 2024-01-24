@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getStudents, addNewStudent, deleteStudent, removeStudent, studentStatus } = require('../controller/studentController')
+const { getStudents, addNewStudent, deleteStudent, getLogUser, logUser, removeStudent, studentStatus } = require('../controller/studentController')
 
 
 
@@ -27,6 +27,12 @@ router.delete("remove/:id", removeStudent)
 router.patch("updatestatus/:id", studentStatus)
 
 //update student data
+
+
+//for login authentication
+router.post("/login", logUser)
+
+router.get("/login", getLogUser)
 
 
 

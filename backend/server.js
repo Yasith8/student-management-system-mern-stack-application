@@ -3,8 +3,12 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotEnv = require('dotenv');
+
+
 require('dotenv').config();
+
 const studentRouter = require('./routes/student')
+
 
 const app = express();
 

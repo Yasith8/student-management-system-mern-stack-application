@@ -1,6 +1,8 @@
 const StudentModel = require('../models/StudentModel');
 const Student = require('../models/StudentModel');
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //get all students
 const getStudents = async(req, res) => {
@@ -121,6 +123,36 @@ const studentStatus = async(req, res) => {
     res.status(200).json(student);
 }
 
+const logUser = async(req, res) => {
+    const { email, studentNic } = req.body;
+
+    const student = await Student.findOne({ email })
+
+    if (!student || bcrypt.compareSync(studentNic, student.studentNic)) {
+        return res.status(401).json({ message: "Invalid Credintials" })
+    }
+
+    const token = jwt.sign({ userId: student._id }, 'yourSecretKey', {
+        expiresIn: '1h'
+    })
+
+    res.json({ token });
+
+}
+
+const getLogUser = (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, 'yourSecretKey');
+    const studentId = decoded.studentId;
+
+    Student.findById(studentId, (err, user) => {
+        if (err || !user) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        res.json({ user });
+    })
+
+}
 
 
 module.exports = {
@@ -128,5 +160,7 @@ module.exports = {
     addNewStudent,
     deleteStudent,
     removeStudent,
-    studentStatus
+    studentStatus,
+    logUser,
+    getLogUser
 }

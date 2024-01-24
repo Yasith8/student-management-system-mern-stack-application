@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
-
+import {useNavigate} from 'react-router-dom';
 import { Input } from "@/components/ui/input"
 
 
 
 
 function LogIn() {
+
+  const navigate=useNavigate()
 
   const [email,setEmail]=useState("");
   const [nic,setNic]=useState("");
@@ -37,15 +39,18 @@ function LogIn() {
     for(let i=0;i<fData.length;i++){
       if((email==fData[i].email)&&nic==fData[i].studentNic&& fData[i].isActive==true){
         console.log("Access Granted");
+        navigate('/dashboard')
         break;
       }else{
         setErr(true);
         setEmail('');
         setNic('');
       }
-    }
+    } 
   }
+  
 
+  
 
 
   return (
