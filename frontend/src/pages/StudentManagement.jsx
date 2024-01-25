@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react'
-/* 
- */
 
-function AddUser() {
- /* const [fData,setFData]=useState(null);
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
+function StudentManagement() {
+  const [fData,setFData]=useState(null);
+
   useEffect(()=>{
     const fetchData=async()=>{
       const response=await fetch('http://localhost:4000/api/students/');
@@ -21,12 +30,9 @@ function AddUser() {
   },[])
 
   console.log(fData)
-*/
   return (
     <div>
-      ss
-  {/* /*
-   <Table>
+      <Table>
   <TableCaption>A list of your recent invoices.</TableCaption>
   <TableHeader>
     <TableRow>
@@ -55,9 +61,8 @@ function AddUser() {
     ))}
   </TableBody>
 </Table>
- */}
     </div>
   )
 }
 
-export default AddUser
+export default StudentManagement
