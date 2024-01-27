@@ -12,6 +12,12 @@ const getStudents = async(req, res) => {
     res.status(200).json(students);
 }
 
+//get single
+const getSingleStudents = async(req, res) => {
+    const student = await Student.findOne();
+    res.status(200).json(student)
+}
+
 
 //create new student
 const addNewStudent = async(req, res) => {
@@ -70,26 +76,9 @@ const addNewStudent = async(req, res) => {
     }
 }
 
-//softdelete student
+
+
 const deleteStudent = async(req, res) => {
-    const { id } = req.parms
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).send("No Student with this ID")
-    }
-
-    const student = await Student.findByIdAndUpdate({ _id: id }, { isActive: false }, { new: true })
-
-    if (!student) {
-        return res.status(400).json("No Student with this ID")
-    }
-
-    res.status(200).json(student)
-}
-
-
-//hard delete  || delete data completely from db
-const removeStudent = async(req, res) => {
     const { id } = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -99,59 +88,10 @@ const removeStudent = async(req, res) => {
     const student = await Student.findByIdAndDelete({ _id: id })
 
     if (!student) {
-        return res.status(400).json("No student with this id")
-    }
-
-    res.status(200).json(student)
-}
-
-
-//update student vle status
-const studentStatus = async(req, res) => {
-    const { id } = req.params;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).send("No Student with this ID")
-    }
-
-    const student = await Student.findByIdAndUpdate({ _id: id }, { isActive: true }, { new: true });
-
-    if (!student) {
-        return res.status(400).json("No student with this ID")
+        return res.status(400).json("No student under this id")
     }
 
     res.status(200).json(student);
-}
-
-const logUser = async(req, res) => {
-    const { email, studentNic } = req.body;
-
-    const student = await Student.findOne({ email })
-
-    if (!student || bcrypt.compareSync(studentNic, student.studentNic)) {
-        return res.status(401).json({ message: "Invalid Credintials" })
-    }
-
-    const token = jwt.sign({ userId: student._id }, 'yourSecretKey', {
-        expiresIn: '1h'
-    })
-
-    res.json({ token });
-
-}
-
-const getLogUser = (req, res) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, 'yourSecretKey');
-    const studentId = decoded.studentId;
-
-    Student.findById(studentId, (err, user) => {
-        if (err || !user) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-        res.json({ user });
-    })
-
 }
 
 
@@ -159,8 +99,5 @@ module.exports = {
     getStudents,
     addNewStudent,
     deleteStudent,
-    removeStudent,
-    studentStatus,
-    logUser,
-    getLogUser
+    getSingleStudents
 }
