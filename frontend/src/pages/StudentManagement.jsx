@@ -12,16 +12,9 @@ import {
 
 
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+  Dialog,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 
 
@@ -31,6 +24,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { HiViewfinderCircle } from "react-icons/hi2";
 import { IoSearch } from "react-icons/io5";
 import 'ldrs/quantum'
+import CustomeAlert from '@/customComponent/CustomeAlert';
 
 
 
@@ -87,23 +81,10 @@ function StudentManagement() {
       <div className='flex items-center justify-between'>
         <div className='h-12 flex mb-4 rounded-md'><span><input type="text" className='border-2 border-violet-700 px-2 h-full rounded-l-md' /></span><button className='bg-violet-700 p-2 w-12 h-full border-2 border-violet-700 flex items-center justify-center rounded-r-md'><IoSearch className='text-white scale-110'/></button></div>
       <button className='bg-violet-700 text-white p-3 rounded-md mb-4 h-12 font-bold'>
-        Add New Student
-        <AlertDialog>
-  <AlertDialogTrigger>Open</AlertDialogTrigger>
-  <AlertDialogContent>
-    <AlertDialogHeader>
-      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-      <AlertDialogDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
-      </AlertDialogDescription>
-    </AlertDialogHeader>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction>Continue</AlertDialogAction>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>
+      <Dialog>
+  <DialogTrigger>Add New Student</DialogTrigger>
+  <CustomeAlert/>
+</Dialog>
         </button>
       </div>
       <Table>

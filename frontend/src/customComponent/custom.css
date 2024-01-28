@@ -1,0 +1,7 @@
+.DialogContent {
+    min-width: 1000px;
+    min-height: 500px;
+    background: white;
+    padding: 50px;
+    border-radius: 4px;
+}
